@@ -1,0 +1,19 @@
+Predicted genre: rock
+
+Top-3 genre probabilities:
+  rock: 0.575
+  country: 0.212
+  blues: 0.077
+
+Audio features:
+  tempo_bpm: 123.046875
+  energy: 0.132258802652359
+  brightness: 1982.5097363768057
+  roughness: 0.08848211381605284
+  key_estimate: D
+
+Positive prompt:
+  an electric guitar mid-swing, classic rock album cover, gritty film grain, dramatic stage lighting, leather and denim textures, steady, mid-tempo, highly detailed, cinematic composition, professional album cover art, trending on artstation
+
+Negative prompt:
+  text, letters, words, watermark, signature, low quality, blurry, pixelated, distorted, deformed, extra limbs, bad anatomy, flat, boring

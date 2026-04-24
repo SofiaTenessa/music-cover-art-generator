@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.venv/
+*.egg-info/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data (too large to commit)
+data/genres_original/
+data/images_original/
+data/features_*.csv
+data/*.zip
+
+# Model weights (too large to commit)
+models/*.pt
+models/*.pth
+models/*.safetensors
+models/hf_cache/
+
+# Generated outputs
+outputs/*.png
+outputs/*.jpg
+outputs/*.wav
+!outputs/.gitkeep
+!outputs/examples/
+
+# Logs
+*.log
+runs/
+wandb/
+lightning_logs/
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Environment
+.env
+kaggle.json
+
+# Streamlit
+.streamlit/secrets.toml
