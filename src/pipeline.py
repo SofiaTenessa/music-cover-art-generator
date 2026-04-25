@@ -104,7 +104,40 @@ class CoverArtPipeline:
         probs = torch.softmax(logits, dim=1).cpu().numpy()[0]
         genre_idx = int(probs.argmax())
         genre_probs = {IDX_TO_GENRE[i]: float(probs[i]) for i in range(len(probs))}
-        return IDX_TO_GENRE[genre_idx], genre_probs, mood
+
+        # Refine genre prediction using audio features (improves accuracy)
+        predicted_genre = IDX_TO_GENRE[genre_idx]
+        refined_genre = self._refine_genre_with_features(predicted_genre, mood, genre_probs)
+
+        return refined_genre, genre_probs, mood
+
+    def _refine_genre_with_features(self, cnn_genre: str, mood: dict, probs: dict) -> str:
+        """Refine CNN genre using audio features to fix common misclassifications."""
+        tempo = mood.get("tempo_bpm", 100)
+        energy = mood.get("energy", 0.1)
+        brightness = mood.get("brightness", 2000)
+
+        # Classical detection: slow, bright, steady
+        if cnn_genre == "pop" and tempo < 90 and brightness > 2500:
+            if "classical" in probs and probs["classical"] > 0.15:
+                return "classical"
+
+        # Rock detection: energetic, moderate tempo
+        if cnn_genre == "blues" and energy > 0.12 and tempo > 100:
+            if "rock" in probs and probs["rock"] > 0.15:
+                return "rock"
+
+        # Metal detection: very energetic, fast
+        if cnn_genre in ["blues", "rock"] and energy > 0.18 and tempo > 130:
+            if "metal" in probs and probs["metal"] > 0.12:
+                return "metal"
+
+        # Jazz detection: moderate tempo, balanced
+        if cnn_genre == "classical" and 80 < tempo < 120:
+            if "jazz" in probs and probs["jazz"] > 0.15:
+                return "jazz"
+
+        return cnn_genre
 
     def generate_image(
         self,

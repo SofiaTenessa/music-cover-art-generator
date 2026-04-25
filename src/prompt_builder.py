@@ -45,8 +45,8 @@ GENRE_STYLES: dict[str, dict] = {
         "subjects": ["sun-lit campus quad with warm glow", "stone archway in golden light", "tree-lined university grounds at golden hour"],
     },
     "disco": {
-        "style": "vibrant and celebratory, rich color grading with blues and golds, energetic but sophisticated, glossy editorial feel",
-        "subjects": ["colorful light play on stone architecture", "vibrant campus courtyard scene", "illuminated arches with warm highlights"],
+        "style": "VIBRANT and COLORFUL, celebratory energy, SATURATED rich color grading with BRIGHT blues and golds, VIVID colors, energetic but sophisticated, glossy editorial feel, HIGHLY SATURATED composition",
+        "subjects": ["COLORFUL vibrant light play on stone architecture", "VIBRANT colorful campus courtyard scene", "illuminated arches with COLORFUL vibrant highlights"],
     },
     "hiphop": {
         "style": "bold and confident, high-energy color palette, urban campus aesthetic, street-art inspired but professional, rich contrast",
@@ -61,8 +61,8 @@ GENRE_STYLES: dict[str, dict] = {
         "subjects": ["dramatic stone tower with bold lighting", "architectural detail with striking shadows", "intense campus scene with strong tones"],
     },
     "pop": {
-        "style": "bright and modern, vibrant Duke blue and gold tones, clean aesthetic, cheerful energy, polished professional photography",
-        "subjects": ["vibrant campus quad with clear light", "bright geometric architecture", "colorful stone detail with bold lighting"],
+        "style": "BRIGHT and COLORFUL, VIBRANT Duke blue and gold tones, SATURATED colors, clean modern aesthetic, cheerful energetic vibe, HIGHLY SATURATED color grading, polished professional photography, colorful composition",
+        "subjects": ["vibrant colorful campus quad with bright light", "bright colorful geometric architecture", "COLORFUL stone detail with vibrant bold lighting"],
     },
     "reggae": {
         "style": "warm and uplifting, tropical color palette meeting Duke campus, sunset golds and greens, joyful organic aesthetic",
@@ -164,6 +164,7 @@ def is_valid_refinement(refinement_text: str) -> tuple[bool, str | None]:
         "dramatic", "subtle", "bold", "delicate", "intensity", "emphasis",
         "foreground", "background", "perspective", "angle", "framing", "crop",
         "saturate", "desaturate", "desaturated", "less", "more", "add", "remove",
+        "black", "white", "grayscale", "monochrome", "bw", "noir",
     }
 
     refinement_lower = refinement_text.lower()
@@ -194,6 +195,9 @@ def map_refinement_to_prompt(refinement_text: str) -> str:
 
     # Mapping dictionary: user input → prompt enhancement
     mappings = {
+        "black and white": "BLACK AND WHITE monochromatic, grayscale aesthetic, no color, monochrome photography, black and white film, high contrast black and white, noir style, desaturated completely",
+        "grayscale": "BLACK AND WHITE monochromatic, grayscale aesthetic, no color, monochrome photography, black and white film, high contrast black and white, noir style, desaturated completely",
+        "bw": "BLACK AND WHITE monochromatic, grayscale aesthetic, no color, monochrome photography, black and white film, high contrast black and white, noir style, desaturated completely",
         "more colorful": "HIGHLY SATURATED colors, vibrant rich palette, bold color grading, strong Duke Royal Blue (#00539B) and gold (#D4AF37) tones, vivid chromatic intensity, maximum color saturation",
         "colorful": "HIGHLY SATURATED colors, vibrant rich palette, bold color grading, strong Duke Royal Blue and gold tones, vivid chromatic intensity, maximum color saturation",
         "darker": "VERY DARK overall exposure, LOW-KEY lighting, HEAVY shadows, REDUCED brightness, moody dark color grading, deep tones, nighttime aesthetic, dramatic darkness, underexposed, shadow emphasis",
