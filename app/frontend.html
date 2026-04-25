@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapel Covers</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Playfair+Display:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='90' fill='%23D4AF37'>⛪</text></svg>">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #001A33 0%, #002651 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            color: #e0e0e0;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            background: #0a1f3e;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            padding: 60px 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .title {
+            font-family: 'UnifrakturMaguntia', cursive;
+            font-size: 3.5rem;
+            color: #D4AF37;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+        }
+
+        .tagline {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1rem;
+            color: #a8a8a8;
+            letter-spacing: 0.08em;
+            font-weight: 400;
+        }
+
+        .divider {
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+            margin: 30px auto;
+        }
+
+        .description {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #b0b0b0;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        /* ===== STEP SECTION ===== */
+        .step {
+            margin-bottom: 45px;
+        }
+
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            margin-bottom: 15px;
+            letter-spacing: 0.05em;
+        }
+
+        .step-subtitle {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 15px;
+        }
+
+        /* ===== UPLOAD AREA ===== */
+        .upload-box {
+            position: relative;
+            border: 2px dashed rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.3s ease;
+        }
+
+        .upload-box:hover {
+            border-color: rgba(212, 175, 55, 0.6);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .upload-box.dragover {
+            border-color: #D4AF37;
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .upload-icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            opacity: 0.7;
+        }
+
+        .upload-text {
+            font-size: 0.95rem;
+            color: #b0b0b0;
+            margin-bottom: 8px;
+        }
+
+        .upload-hint {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        #audio-input {
+            display: none;
+        }
+
+        /* ===== AUDIO PLAYER ===== */
+        .player-container {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .player-container.active {
+            display: block;
+        }
+
+        .file-name {
+            font-size: 0.9rem;
+            color: #D4AF37;
+            margin-bottom: 12px;
+            word-break: break-all;
+        }
+
+        .progress-container {
+            margin: 12px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(212, 175, 55, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #D4AF37;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .waveform-container {
+            margin: 15px 0;
+            height: 40px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 2px;
+        }
+
+        .waveform-bar {
+            width: 3px;
+            background: linear-gradient(180deg, #D4AF37, #8b6914);
+            border-radius: 2px;
+            opacity: 0.6;
+            animation: wave 0.6s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { height: 10px; }
+            50% { height: 25px; }
+        }
+
+        .time-display {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 10px;
+        }
+
+        /* ===== LYRICS SECTION ===== */
+        .lyrics-section {
+            display: none;
+            margin-top: 35px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .lyrics-section.active {
+            display: block;
+        }
+
+        .lyrics-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .lyrics-checkbox input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #D4AF37;
+        }
+
+        .lyrics-checkbox label {
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .lyrics-textarea {
+            width: 100%;
+            height: 100px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 6px;
+            color: #e0e0e0;
+            font-family: 'Inter', system-ui;
+            font-size: 0.9rem;
+            resize: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .lyrics-textarea:focus {
+            outline: none;
+            border-color: #D4AF37;
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        /* ===== BUTTON ===== */
+        .btn {
+            width: 100%;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.05em;
+            font-family: 'Inter', system-ui;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #D4AF37, #c99a2a);
+            color: #001a33;
+            margin-top: 25px;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: linear-gradient(135deg, #e8c858, #d4af37);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: rgba(212, 175, 55, 0.15);
+            color: #D4AF37;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            margin-top: 12px;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: rgba(212, 175, 55, 0.25);
+            border-color: #D4AF37;
+        }
+
+        /* ===== GENRE DISPLAY ===== */
+        .genre-display {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 8px;
+        }
+
+        .genre-display.active {
+            display: block;
+        }
+
+        .genre-label {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 8px;
+        }
+
+        .genre-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            margin-bottom: 12px;
+        }
+
+        .genre-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .genre-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .genre-label-small {
+            font-size: 0.85rem;
+            color: #aaa;
+            width: 60px;
+            text-align: left;
+        }
+
+        .bar {
+            flex: 1;
+            height: 6px;
+            background: rgba(212, 175, 55, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #D4AF37, #c99a2a);
+            border-radius: 3px;
+        }
+
+        .bar-value {
+            font-size: 0.8rem;
+            color: #888;
+            width: 30px;
+            text-align: right;
+        }
+
+        /* ===== IMAGE SECTION ===== */
+        .image-section {
+            display: none;
+            margin-top: 45px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .image-section.active {
+            display: block;
+        }
+
+        .image-container {
+            margin-bottom: 25px;
+        }
+
+        .image-container img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .image-caption {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-top: 12px;
+            text-align: center;
+        }
+
+        .download-btn {
+            width: 100%;
+            padding: 12px 20px;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            color: #D4AF37;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: 'Inter', system-ui;
+        }
+
+        .download-btn:hover {
+            background: rgba(212, 175, 55, 0.25);
+            border-color: #D4AF37;
+        }
+
+        /* ===== REFINEMENT SECTION ===== */
+        .refinement-section {
+            display: none;
+            margin-top: 35px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: 8px;
+        }
+
+        .refinement-section.active {
+            display: block;
+        }
+
+        .refinement-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .refinement-input {
+            flex: 1;
+            padding: 12px 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 6px;
+            color: #e0e0e0;
+            font-family: 'Inter', system-ui;
+            font-size: 0.9rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .refinement-input:focus {
+            outline: none;
+            border-color: #D4AF37;
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .refinement-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .suggestion-chip {
+            padding: 6px 14px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #D4AF37;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .suggestion-chip:hover {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: #D4AF37;
+        }
+
+        /* ===== ERROR MESSAGE ===== */
+        .error-box {
+            display: none;
+            margin-top: 20px;
+            padding: 14px 16px;
+            background: rgba(220, 53, 69, 0.08);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            border-left: 4px solid #dc3545;
+            border-radius: 6px;
+            color: #ff9999;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .error-box.active {
+            display: block;
+        }
+
+        .error-icon {
+            margin-right: 8px;
+        }
+
+        /* ===== LOADING SPINNER ===== */
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(212, 175, 55, 0.2);
+            border-top-color: #D4AF37;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* ===== PROMPT DISPLAY ===== */
+        .prompt-display {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: 6px;
+        }
+
+        .prompt-display.active {
+            display: block;
+        }
+
+        .prompt-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .prompt-text {
+            font-size: 0.85rem;
+            color: #aaa;
+            line-height: 1.4;
+            font-style: italic;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 25px;
+            }
+
+            .title {
+                font-size: 2.5rem;
+            }
+
+            .tagline {
+                font-size: 0.9rem;
+            }
+
+            .step-title {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="title">Chapel Covers</div>
+            <div class="tagline">From the Chapel to your headphones.</div>
+            <div class="divider"></div>
+            <div class="description">
+                Transform your music into Duke-inspired indie album cover art. Upload a song, optionally add lyrics, and AI will generate a moody chapel-themed cover.
+            </div>
+        </div>
+
+        <!-- STEP 1: UPLOAD -->
+        <div class="step">
+            <div class="step-title">📁 Step 1: Upload Your Song</div>
+            <div class="step-subtitle">Choose an audio file (MP3, WAV, FLAC, OGG, M4A)</div>
+
+            <div class="upload-box" id="upload-box">
+                <div class="upload-icon">⬆️</div>
+                <div class="upload-text">Click to upload or drag and drop</div>
+                <div class="upload-hint">MP3, WAV, FLAC, OGG, or M4A • Max 50MB</div>
+            </div>
+
+            <input type="file" id="audio-input" accept=".mp3,.wav,.flac,.ogg,.m4a" />
+
+            <div class="player-container" id="player-container">
+                <div class="file-name" id="file-name"></div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+                <div class="waveform-container" id="waveform"></div>
+                <div class="time-display" id="time-display">0:00 / 0:00</div>
+            </div>
+
+            <div class="genre-display" id="genre-display">
+                <div class="genre-label">Predicted Genre</div>
+                <div class="genre-name" id="genre-name"></div>
+                <div class="genre-bars" id="genre-bars"></div>
+            </div>
+
+            <div class="error-box" id="error-box">
+                <span class="error-icon">⚠️</span>
+                <span id="error-text"></span>
+            </div>
+
+            <div class="loading" id="loading-analyze">
+                <div class="spinner"></div>
+                <div class="loading-text">Analyzing your song...</div>
+            </div>
+
+            <!-- GENERATE BUTTON (shows after genre prediction) -->
+            <button class="btn btn-primary" id="generate-btn" style="display: none;">
+                🎨 Generate Album Cover
+            </button>
+        </div>
+
+        <!-- STEP 2: LYRICS -->
+        <div class="lyrics-section" id="lyrics-section">
+            <div class="step-title">✍️ Step 2: Optional — Add Lyrics</div>
+
+            <div class="lyrics-checkbox">
+                <input type="checkbox" id="lyrics-checkbox" />
+                <label for="lyrics-checkbox">Include lyrics to influence the mood</label>
+            </div>
+
+            <textarea
+                class="lyrics-textarea"
+                id="lyrics-input"
+                placeholder="Paste song lyrics (or a few key lines) to add emotional tone to your cover..."
+                style="display: none;"
+            ></textarea>
+        </div>
+
+        <div class="loading" id="loading-generate">
+            <div class="spinner"></div>
+            <div class="loading-text">Creating your chapel-inspired cover (30-90 seconds)...</div>
+        </div>
+
+        <!-- IMAGE DISPLAY & REFINEMENT -->
+        <div class="image-section" id="image-section">
+            <div class="step-title">Your Chapel Cover Art</div>
+
+            <div class="image-container">
+                <img id="generated-image" alt="Generated album cover" />
+            </div>
+
+            <div class="image-caption" id="image-caption"></div>
+
+            <button class="download-btn" id="download-btn">⬇️ Download Cover</button>
+
+            <div class="prompt-display" id="prompt-display">
+                <div class="prompt-label">Generated Prompt</div>
+                <div class="prompt-text" id="prompt-text"></div>
+            </div>
+
+            <!-- REFINEMENT -->
+            <div class="refinement-section" id="refinement-section">
+                <div class="step-title">🎭 Refine Your Cover</div>
+                <div class="step-subtitle">Describe what you'd like to change</div>
+
+                <div class="refinement-input-group">
+                    <input
+                        type="text"
+                        class="refinement-input"
+                        id="refinement-input"
+                        placeholder="e.g., make it darker, add rain, more gothic..."
+                    />
+                    <button class="btn btn-secondary" id="refine-btn" style="flex: 0; width: auto; margin: 0; padding: 12px 20px;">
+                        🔄 Refine
+                    </button>
+                </div>
+
+                <div class="refinement-suggestions">
+                    <div class="suggestion-chip" data-suggestion="make it darker">make it darker</div>
+                    <div class="suggestion-chip" data-suggestion="add more rain">add rain</div>
+                    <div class="suggestion-chip" data-suggestion="more gothic">more gothic</div>
+                    <div class="suggestion-chip" data-suggestion="more cinematic">more cinematic</div>
+                    <div class="suggestion-chip" data-suggestion="less colorful">less colorful</div>
+                    <div class="suggestion-chip" data-suggestion="more dreamy">more dreamy</div>
+                </div>
+
+                <div class="loading" id="loading-refine">
+                    <div class="spinner"></div>
+                    <div class="loading-text">Refining your cover...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer>
+            🏛️ Chapel Covers · CS 372 Final Project · Custom CNN on GTZAN · Stable Diffusion Generation
+        </footer>
+    </div>
+
+    <script>
+        // ===== STATE =====
+        const state = {
+            audioPath: null,
+            genre: null,
+            genreProbs: {},
+            moodFeatures: null,
+            lyrics: "",
+            currentPrompt: null,
+            currentImage: null,
+        };
+
+        // ===== DOM ELEMENTS =====
+        const uploadBox = document.getElementById("upload-box");
+        const audioInput = document.getElementById("audio-input");
+        const playerContainer = document.getElementById("player-container");
+        const fileName = document.getElementById("file-name");
+        const progressFill = document.getElementById("progress-fill");
+        const waveform = document.getElementById("waveform");
+        const timeDisplay = document.getElementById("time-display");
+        const genreDisplay = document.getElementById("genre-display");
+        const genreName = document.getElementById("genre-name");
+        const genreBars = document.getElementById("genre-bars");
+        const errorBox = document.getElementById("error-box");
+        const errorText = document.getElementById("error-text");
+        const loadingAnalyze = document.getElementById("loading-analyze");
+        const lyricsCheckbox = document.getElementById("lyrics-checkbox");
+        const lyricsInput = document.getElementById("lyrics-input");
+        const lyricsSection = document.getElementById("lyrics-section");
+        const generateBtn = document.getElementById("generate-btn");
+        const loadingGenerate = document.getElementById("loading-generate");
+        const imageSection = document.getElementById("image-section");
+        const generatedImage = document.getElementById("generated-image");
+        const imageCaption = document.getElementById("image-caption");
+        const downloadBtn = document.getElementById("download-btn");
+        const promptDisplay = document.getElementById("prompt-display");
+        const promptText = document.getElementById("prompt-text");
+        const refinementSection = document.getElementById("refinement-section");
+        const refinementInput = document.getElementById("refinement-input");
+        const refineBtn = document.getElementById("refine-btn");
+        const suggestionChips = document.querySelectorAll(".suggestion-chip");
+        const loadingRefine = document.getElementById("loading-refine");
+
+        // ===== UPLOAD HANDLING =====
+        uploadBox.addEventListener("click", () => audioInput.click());
+
+        uploadBox.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            uploadBox.classList.add("dragover");
+        });
+
+        uploadBox.addEventListener("dragleave", () => {
+            uploadBox.classList.remove("dragover");
+        });
+
+        uploadBox.addEventListener("drop", (e) => {
+            e.preventDefault();
+            uploadBox.classList.remove("dragover");
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                audioInput.files = files;
+                handleAudioUpload();
+            }
+        });
+
+        audioInput.addEventListener("change", handleAudioUpload);
+
+        function handleAudioUpload() {
+            const file = audioInput.files[0];
+            if (!file) return;
+
+            const allowedTypes = ["audio/mpeg", "audio/wav", "audio/flac", "audio/ogg", "audio/mp4"];
+            if (!allowedTypes.some(type => file.type.includes(type.split("/")[1]))) {
+                showError("Invalid file type. Please upload MP3, WAV, FLAC, OGG, or M4A.");
+                return;
+            }
+
+            fileName.textContent = `📀 ${file.name}`;
+            playerContainer.classList.add("active");
+            lyricsSection.classList.add("active");
+
+            // Simulate waveform
+            generateWaveform();
+
+            // Analyze with API
+            analyzeAudio(file);
+        }
+
+        function generateWaveform() {
+            waveform.innerHTML = "";
+            for (let i = 0; i < 30; i++) {
+                const bar = document.createElement("div");
+                bar.className = "waveform-bar";
+                bar.style.animationDelay = `${i * 0.05}s`;
+                bar.style.height = Math.random() * 25 + 10 + "px";
+                waveform.appendChild(bar);
+            }
+        }
+
+        async function analyzeAudio(file) {
+            clearError();
+            loadingAnalyze.classList.add("active");
+            generateBtn.style.display = "none";
+            imageSection.classList.remove("active");
+
+            try {
+                const formData = new FormData();
+                formData.append("audio", file);
+                if (state.lyrics) {
+                    formData.append("lyrics", state.lyrics);
+                }
+
+                const response = await fetch("/analyze", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const data = await response.json();
+
+                if (!data.success) {
+                    showError(data.error || "Failed to analyze audio");
+                    loadingAnalyze.classList.remove("active");
+                    return;
+                }
+
+                // Update state
+                state.audioPath = data.audio_path;
+                state.genre = data.genre;
+                state.genreProbs = data.genre_probs;
+                state.moodFeatures = data.mood_features;
+                state.currentPrompt = data.prompt;
+
+                // Display genre
+                displayGenre(data.genre, data.genre_probs);
+                generateBtn.style.display = "block";
+
+            } catch (error) {
+                showError("Error analyzing audio: " + error.message);
+            } finally {
+                loadingAnalyze.classList.remove("active");
+            }
+        }
+
+        function displayGenre(genre, probs) {
+            genreName.textContent = genre.charAt(0).toUpperCase() + genre.slice(1);
+            genreDisplay.classList.add("active");
+
+            // Top 5 genres
+            const top5 = Object.entries(probs)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5);
+
+            genreBars.innerHTML = "";
+            top5.forEach(([g, p]) => {
+                const barDiv = document.createElement("div");
+                barDiv.className = "genre-bar";
+                barDiv.innerHTML = `
+                    <div class="genre-label-small">${g}</div>
+                    <div class="bar">
+                        <div class="bar-fill" style="width: ${(p * 100).toFixed(0)}%"></div>
+                    </div>
+                    <div class="bar-value">${(p * 100).toFixed(0)}%</div>
+                `;
+                genreBars.appendChild(barDiv);
+            });
+        }
+
+        // ===== LYRICS HANDLING =====
+        lyricsCheckbox.addEventListener("change", (e) => {
+            lyricsInput.style.display = e.target.checked ? "block" : "none";
+            state.lyrics = "";
+            lyricsInput.value = "";
+        });
+
+        lyricsInput.addEventListener("change", (e) => {
+            state.lyrics = e.target.value;
+        });
+
+        // ===== GENERATE BUTTON =====
+        generateBtn.addEventListener("click", generateCover);
+
+        async function generateCover() {
+            clearError();
+            loadingGenerate.classList.add("active");
+            generateBtn.disabled = true;
+
+            try {
+                // Re-analyze with lyrics if provided
+                if (state.lyrics) {
+                    const file = audioInput.files[0];
+                    const formData = new FormData();
+                    formData.append("audio", file);
+                    formData.append("lyrics", state.lyrics);
+
+                    const analyzeRes = await fetch("/analyze", {
+                        method: "POST",
+                        body: formData,
+                    });
+                    const analyzeData = await analyzeRes.json();
+                    if (analyzeData.success) {
+                        state.currentPrompt = analyzeData.prompt;
+                    }
+                }
+
+                // Generate image
+                const genRes = await fetch("/generate", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        prompt: state.currentPrompt.positive,
+                        negative_prompt: state.currentPrompt.negative,
+                        steps: 30,
+                        guidance: 7.5,
+                    }),
+                });
+
+                const genData = await genRes.json();
+                if (!genData.success) {
+                    showError(genData.error || "Failed to generate image");
+                    return;
+                }
+
+                // Display image
+                state.currentImage = genData.image;
+                generatedImage.src = genData.image;
+                imageCaption.textContent = `${state.genre.toUpperCase()} • Generated with Stable Diffusion`;
+                imageSection.classList.add("active");
+                refinementSection.classList.add("active");
+                promptText.textContent = state.currentPrompt.positive;
+                promptDisplay.classList.add("active");
+
+            } catch (error) {
+                showError("Error generating image: " + error.message);
+            } finally {
+                loadingGenerate.classList.remove("active");
+                generateBtn.disabled = false;
+            }
+        }
+
+        // ===== REFINEMENT =====
+        refineBtn.addEventListener("click", refineImage);
+        refinementInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") refineImage();
+        });
+
+        suggestionChips.forEach((chip) => {
+            chip.addEventListener("click", () => {
+                refinementInput.value = chip.dataset.suggestion;
+                refineImage();
+            });
+        });
+
+        async function refineImage() {
+            const refinement = refinementInput.value.trim();
+            if (!refinement) {
+                showError("Please describe what you'd like to change");
+                return;
+            }
+
+            clearError();
+            loadingRefine.classList.add("active");
+            refineBtn.disabled = true;
+
+            try {
+                const refRes = await fetch("/refine", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        current_prompt: state.currentPrompt.positive,
+                        refinement: refinement,
+                        negative_prompt: state.currentPrompt.negative,
+                    }),
+                });
+
+                const refData = await refRes.json();
+                if (!refData.success) {
+                    showError(refData.error || "Failed to refine image");
+                    return;
+                }
+
+                // Update display
+                state.currentImage = refData.image;
+                state.currentPrompt.positive = refData.refined_prompt;
+                generatedImage.src = refData.image;
+                promptText.textContent = refData.refined_prompt;
+                refinementInput.value = "";
+
+            } catch (error) {
+                showError("Error refining image: " + error.message);
+            } finally {
+                loadingRefine.classList.remove("active");
+                refineBtn.disabled = false;
+            }
+        }
+
+        // ===== DOWNLOAD =====
+        downloadBtn.addEventListener("click", () => {
+            const link = document.createElement("a");
+            link.href = state.currentImage;
+            link.download = `${state.genre}_chapel_cover.png`;
+            link.click();
+        });
+
+        // ===== ERROR HANDLING =====
+        function showError(message) {
+            errorText.textContent = message;
+            errorBox.classList.add("active");
+        }
+
+        function clearError() {
+            errorBox.classList.remove("active");
+            errorText.textContent = "";
+        }
+    </script>
+</body>
+</html>

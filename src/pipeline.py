@@ -28,7 +28,7 @@ from .preprocessing import (
     AudioConfig, DEFAULT_CONFIG, audio_to_log_mel, extract_mood_features,
     load_audio, normalize_spectrogram,
 )
-from .prompt_builder import Prompt, build_prompt
+from .prompt_builder import Prompt, build_prompt, refine_prompt
 from .train import get_device
 
 
@@ -129,12 +129,16 @@ class CoverArtPipeline:
     def run(
         self,
         audio_path: str | Path,
+        lyrics: str | None = None,
         num_inference_steps: int = 30,
         guidance_scale: float = 7.5,
         seed: int | None = None,
     ) -> PipelineResult:
+        """
+        Run the full pipeline: analyze audio → build prompt (optionally with lyrics) → generate cover art.
+        """
         genre, genre_probs, mood = self.classify_audio(audio_path)
-        prompt = build_prompt(genre, mood_features=mood)
+        prompt = build_prompt(genre, mood_features=mood, lyrics=lyrics)
         image = self.generate_image(
             prompt,
             num_inference_steps=num_inference_steps,
@@ -149,6 +153,40 @@ class CoverArtPipeline:
             image=image,
         )
 
+    def generate_from_prompt_text(
+        self,
+        prompt_text: str,
+        negative_prompt: str | None = None,
+        num_inference_steps: int = 30,
+        guidance_scale: float = 7.5,
+        seed: int | None = None,
+    ) -> Image.Image:
+        """
+        Generate an image from a raw prompt string (useful for refinement).
+
+        Args:
+            prompt_text: The positive prompt
+            negative_prompt: The negative prompt (to avoid)
+            num_inference_steps: Number of diffusion steps (higher = slower but higher quality)
+            guidance_scale: How strongly to follow the prompt (higher = stronger)
+            seed: Optional random seed for reproducibility
+
+        Returns:
+            PIL Image object
+        """
+        self._ensure_sd()
+        generator = None
+        if seed is not None:
+            generator = torch.Generator(device=self.device).manual_seed(seed)
+        result = self._sd_pipe(
+            prompt=prompt_text,
+            negative_prompt=negative_prompt or "",
+            num_inference_steps=num_inference_steps,
+            guidance_scale=guidance_scale,
+            generator=generator,
+        )
+        return result.images[0]
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -159,6 +197,7 @@ def main():
     parser.add_argument("--guidance", type=float, default=7.5)
     parser.add_argument("--seed", type=int, default=None)
     parser.add_argument("--model-id", default="runwayml/stable-diffusion-v1-5")
+    parser.add_argument("--lyrics", default=None, help="Optional lyrics to influence cover art style")
     args = parser.parse_args()
 
     pipeline = CoverArtPipeline(
@@ -167,6 +206,7 @@ def main():
     )
     result = pipeline.run(
         args.audio,
+        lyrics=args.lyrics,
         num_inference_steps=args.steps,
         guidance_scale=args.guidance,
         seed=args.seed,
