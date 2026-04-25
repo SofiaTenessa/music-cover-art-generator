@@ -48,3 +48,4 @@ kaggle.json
 
 # Streamlit
 .streamlit/secrets.toml
+gtzan-dataset-music-genre-classification.zip
