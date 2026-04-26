@@ -112,24 +112,29 @@ class CoverArtPipeline:
         return refined_genre, genre_probs, mood
 
     def _refine_genre_with_features(self, cnn_genre: str, mood: dict, probs: dict) -> str:
-        """Refine CNN genre using audio features to fix common misclassifications."""
+        """Refine CNN genre using audio features to fix common misclassifications.
+
+        The CNN sometimes confuses similar genres (blues↔rock, classical↔jazz).
+        This heuristic uses audio features to catch these errors.
+        """
         tempo = mood.get("tempo_bpm", 100)
         energy = mood.get("energy", 0.1)
         brightness = mood.get("brightness", 2000)
+
+        # ROCK detection: CNN predicted blues, but audio is energetic + fast
+        # Blues is typically slower (< 100 BPM), rock is faster (> 110 BPM)
+        if cnn_genre == "blues" and energy > 0.10 and tempo > 110:
+            if "rock" in probs and probs["rock"] > 0.10:  # Even 10% confidence is enough if energy/tempo match
+                return "rock"
 
         # Classical detection: slow, bright, steady
         if cnn_genre == "pop" and tempo < 90 and brightness > 2500:
             if "classical" in probs and probs["classical"] > 0.15:
                 return "classical"
 
-        # Rock detection: energetic, moderate tempo
-        if cnn_genre == "blues" and energy > 0.12 and tempo > 100:
-            if "rock" in probs and probs["rock"] > 0.15:
-                return "rock"
-
-        # Metal detection: very energetic, fast
+        # Metal detection: very energetic, very fast
         if cnn_genre in ["blues", "rock"] and energy > 0.18 and tempo > 130:
-            if "metal" in probs and probs["metal"] > 0.12:
+            if "metal" in probs and probs["metal"] > 0.10:
                 return "metal"
 
         # Jazz detection: moderate tempo, balanced

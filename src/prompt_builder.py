@@ -33,48 +33,48 @@ DUKE_AESTHETIC_BASE = (
 
 GENRE_STYLES: dict[str, dict] = {
     "blues": {
-        "style": "melancholic but warm, rich analog photograph, golden-hour light, deep blues with amber warmth, introspective mood",
-        "subjects": ["stone archway with warm window light", "campus courtyard at dusk", "architectural detail with soft shadows"],
+        "style": "melancholic album cover set on Duke campus at dusk, featuring Duke Chapel in soft blue twilight, wet stone reflecting ambient light, subtle golden window glow, mist in the air, deep navy and amber color palette, cinematic lighting, shallow depth of field, emotional and introspective mood, slight film grain, soft shadows",
+        "subjects": ["Duke Chapel at dusk", "wet stone courtyard at twilight", "chapel window with golden glow"],
     },
     "classical": {
-        "style": "elegant and refined, symmetrical stone architecture, warm candlelit tones, sophisticated composition, professional lighting",
-        "subjects": ["ornate stone entrance framed beautifully", "arches creating balanced geometric composition", "warm light through historic corridor"],
+        "style": "elegant classical album cover with perfectly symmetrical composition inside Duke Chapel, towering gothic arches and columns, soft diffused daylight, marble and stone textures, muted blue and ivory tones, balanced framing, minimalistic and refined, high detail, no clutter, timeless and sophisticated aesthetic",
+        "subjects": ["Duke Chapel interior with symmetrical arches", "gothic columns and vaulted ceiling", "chapel architecture in soft daylight"],
     },
     "country": {
-        "style": "warm and inviting, golden-hour Americana aesthetic, rich earth tones, bright blue accents, natural and approachable",
-        "subjects": ["sun-lit campus quad with warm glow", "stone archway in golden light", "tree-lined university grounds at golden hour"],
+        "style": "warm country album cover set in Duke Gardens at golden hour, soft sunlight filtering through trees, fallen leaves, wooden bench or pathway, earthy tones (brown, gold, muted green), relaxed and nostalgic atmosphere, slight haze, natural textures, gentle depth, Americana southern charm",
+        "subjects": ["Duke Gardens at golden hour", "tree-lined pathways at sunset", "natural campus landscape with autumn leaves"],
     },
     "disco": {
-        "style": "VIBRANT and COLORFUL, celebratory energy, SATURATED rich color grading with BRIGHT blues and golds, VIVID colors, energetic but sophisticated, glossy editorial feel, HIGHLY SATURATED composition",
-        "subjects": ["COLORFUL vibrant light play on stone architecture", "VIBRANT colorful campus courtyard scene", "illuminated arches with COLORFUL vibrant highlights"],
+        "style": "vibrant disco album cover on Duke campus at night, glowing neon blue and gold lights reflecting on pavement, dynamic lighting, motion blur, energetic composition, saturated colors, lens flares, celebratory mood, high contrast, stylized lighting, glossy surfaces, party atmosphere",
+        "subjects": ["Duke campus with neon lights at night", "glowing stone architecture with light reflections", "dynamic nighttime campus scene with energy"],
     },
     "hiphop": {
-        "style": "bold and confident, high-energy color palette, urban campus aesthetic, street-art inspired but professional, rich contrast",
-        "subjects": ["dynamic campus archway with bold lighting", "expressive architectural detail", "energetic courtyard composition"],
+        "style": "bold hip-hop album cover on Duke campus, low-angle perspective, strong shadows, dramatic lighting, campus architecture with street-art overlays, deep contrast, cool blue tones with gold highlights, gritty texture, urban energy, confident composition, high sharpness, cinematic intensity",
+        "subjects": ["Duke campus from low-angle perspective", "architectural detail with dramatic shadows", "urban campus composition with strong contrast"],
     },
     "jazz": {
-        "style": "sophisticated and cool, balanced blue and gold tones, geometric composition, smooth refined aesthetic, cool jazz vibes",
-        "subjects": ["architectural arches creating clean lines", "campus detail with sophisticated lighting", "stone patterns with cool-toned light"],
+        "style": "smooth jazz album cover with Duke campus at night, soft spotlighting, calm atmosphere, deep blue tones with subtle gold accents, reflections on stone or pavement, minimal composition, elegant negative space, slightly blurred edges, relaxed and sophisticated mood",
+        "subjects": ["Duke campus at night with soft lighting", "architectural reflection in stone", "minimalist composition with negative space"],
     },
     "metal": {
-        "style": "intense and dramatic, high contrast with bold color accents, moody but not desaturated, powerful composition, energetic",
-        "subjects": ["dramatic stone tower with bold lighting", "architectural detail with striking shadows", "intense campus scene with strong tones"],
+        "style": "intense metal album cover featuring Duke Chapel under a stormy sky, dramatic clouds, lightning or harsh contrast lighting, dark shadows, heavy textures, desaturated tones with sharp highlights, aggressive composition, cinematic darkness, high contrast, powerful and ominous mood",
+        "subjects": ["Duke Chapel under stormy sky", "dark dramatic architecture with harsh lighting", "chapel silhouette against dramatic clouds"],
     },
     "pop": {
-        "style": "BRIGHT and COLORFUL, VIBRANT Duke blue and gold tones, SATURATED colors, clean modern aesthetic, cheerful energetic vibe, HIGHLY SATURATED color grading, polished professional photography, colorful composition",
-        "subjects": ["vibrant colorful campus quad with bright light", "bright colorful geometric architecture", "COLORFUL stone detail with vibrant bold lighting"],
+        "style": "bright pop album cover on Duke campus during a sunny day, vibrant blue sky, saturated Duke blue and gold palette, clean modern composition, cheerful mood, soft shadows, high clarity, minimal grain, energetic and uplifting, crisp lighting, playful aesthetic",
+        "subjects": ["Duke campus on bright sunny day", "vibrant blue sky with saturated colors", "cheerful campus scene with clear lighting"],
     },
     "reggae": {
-        "style": "warm and uplifting, tropical color palette meeting Duke campus, sunset golds and greens, joyful organic aesthetic",
-        "subjects": ["sun-lit campus with warm vegetation", "golden-lit stone with natural elements", "bright campus courtyard with organic feel"],
+        "style": "relaxed reggae album cover in Duke Gardens at sunset, lush greenery, warm golden light, soft shadows, hints of green and amber tones, peaceful composition, breezy and uplifting mood, natural textures, slight haze, calm and rhythmic atmosphere",
+        "subjects": ["Duke Gardens at sunset with lush greenery", "warm golden light through natural elements", "peaceful campus landscape at dusk"],
     },
     "rock": {
-        "style": "energetic and raw, powerful color palette with blues and golds, film grain texture, edgy but not overly dark, driving energy",
-        "subjects": ["dramatic stone architecture with bold light", "powerful campus composition with movement", "energetic archway with striking contrast"],
+        "style": "energetic rock album cover on Duke campus, gritty texture, high contrast black and white with blue accents, film grain, motion blur, dynamic framing, edgy composition, strong shadows, raw and powerful mood, slightly chaotic energy",
+        "subjects": ["Duke campus with dynamic framing", "high contrast architectural detail", "energetic campus composition with motion"],
     },
 }
 
-QUALITY_TAGS = "highly detailed, cinematic composition, professional indie album cover art, trending on artstation, artistic photography"
+QUALITY_TAGS = "album cover, square format, centered composition, highly detailed, cinematic lighting, 4k, professional photography, trending on artstation, artistic aesthetic, no text"
 
 NEGATIVE_PROMPT = (
     "text, letters, watermark, logo, blurry, distorted, bad anatomy, extra limbs, "
@@ -158,13 +158,15 @@ def is_valid_refinement(refinement_text: str) -> tuple[bool, str | None]:
         "color", "colorful", "bright", "dark", "light", "lighting", "mood", "tone",
         "warm", "cool", "saturated", "vibrant", "muted", "cinematic", "minimal",
         "gothic", "campus", "architecture", "composition", "style", "aesthetic",
-        "rain", "sky", "clouds", "gold", "blue", "navy", "shadows", "contrast",
+        "sky", "clouds", "fog", "gold", "blue", "navy", "shadows", "contrast",
         "sharp", "soft", "focus", "blur", "texture", "grain", "film", "vintage",
         "modern", "indie", "editorial", "professional", "energetic", "peaceful",
         "dramatic", "subtle", "bold", "delicate", "intensity", "emphasis",
         "foreground", "background", "perspective", "angle", "framing", "crop",
         "saturate", "desaturate", "desaturated", "less", "more", "add", "remove",
         "black", "white", "grayscale", "monochrome", "bw", "noir",
+        "sunset", "sunrise", "night", "dusk", "dawn", "daytime", "midday",
+        "sunny", "dreamy", "gloomy", "moody", "calm", "peaceful", "intense", "energetic", "bold",
     }
 
     refinement_lower = refinement_text.lower()
@@ -184,84 +186,147 @@ def is_valid_refinement(refinement_text: str) -> tuple[bool, str | None]:
 
 def map_refinement_to_prompt(refinement_text: str) -> str:
     """
-    Map user refinement input to stronger descriptive prompt language.
+    Map user refinement input to AGGRESSIVE descriptive prompt language.
+
+    Key principle: Refinements must OVERRIDE previous prompt instructions.
+    Use repetition, caps, and strong descriptors to force Stable Diffusion to comply.
 
     Examples:
-    - "more colorful" → "richer color palette, vibrant tones, more saturated colors"
-    - "less gothic" → "less dramatic, more approachable, warmer aesthetic"
-    - "more campus" → "more campus quad, more architecture, university atmosphere"
+    - "darker" → "VERY DARK, DARK, dark, LOW-KEY, SHADOWS, nighttime..."
+    - "add rain" → "RAIN, RAIN FALLING, wet, rainy, rain-soaked, precipitation..."
+    - "black and white" → "MONOCHROMATIC, GRAYSCALE, BLACK, WHITE, no color..."
     """
     refinement_lower = refinement_text.lower().strip()
 
-    # Mapping dictionary: user input → prompt enhancement
+    # AGGRESSIVE Mapping dictionary: user input → STRONG prompt modification
+    # Key: Use repetition, caps, and extremes to force the model to listen
     mappings = {
-        "black and white": "BLACK AND WHITE monochromatic, grayscale aesthetic, no color, monochrome photography, black and white film, high contrast black and white, noir style, desaturated completely",
-        "grayscale": "BLACK AND WHITE monochromatic, grayscale aesthetic, no color, monochrome photography, black and white film, high contrast black and white, noir style, desaturated completely",
-        "bw": "BLACK AND WHITE monochromatic, grayscale aesthetic, no color, monochrome photography, black and white film, high contrast black and white, noir style, desaturated completely",
-        "more colorful": "HIGHLY SATURATED colors, vibrant rich palette, bold color grading, strong Duke Royal Blue (#00539B) and gold (#D4AF37) tones, vivid chromatic intensity, maximum color saturation",
-        "colorful": "HIGHLY SATURATED colors, vibrant rich palette, bold color grading, strong Duke Royal Blue and gold tones, vivid chromatic intensity, maximum color saturation",
-        "darker": "VERY DARK overall exposure, LOW-KEY lighting, HEAVY shadows, REDUCED brightness, moody dark color grading, deep tones, nighttime aesthetic, dramatic darkness, underexposed, shadow emphasis",
-        "more dark": "VERY DARK overall exposure, LOW-KEY lighting, HEAVY shadows, REDUCED brightness, moody dark color grading, deep tones, nighttime aesthetic, dramatic darkness, underexposed, shadow emphasis",
-        "dark": "VERY DARK overall exposure, LOW-KEY lighting, HEAVY shadows, REDUCED brightness, moody dark color grading, deep tones, nighttime aesthetic, dramatic darkness, underexposed, shadow emphasis",
-        "less gothic": "less dramatic, more approachable, warmer aesthetic, less emphasis on shadows, more inviting feel",
-        "less dark": "brighter lighting, less shadow emphasis, warmer tones, more visible detail, higher key lighting",
-        "more campus": "more campus quad visible, more architecture, more student spaces, more university atmosphere, prominent buildings",
-        "campus": "stronger campus feel, more architectural detail, university environment emphasis, campus elements",
-        "more minimal": "cleaner composition, less clutter, focused subject, minimal background, simple elegant design",
-        "minimal": "minimal elements, clean aesthetic, focused composition, less complexity",
-        "more cinematic": "cinematic lighting, professional color grading, dramatic but balanced, high production value, cinema aesthetic",
-        "cinematic": "cinematic composition, professional lighting, refined color grading, polished look, movie-like",
-        "more warm": "warm color temperature, golden tones, amber light, cozy atmosphere, soft warmth",
-        "warm": "warm lighting, golden tones, inviting warmth, amber highlights",
-        "add rain": "rain effect, wet surfaces, moisture in air, rain-soaked aesthetic, reflective surfaces, rainy weather",
-        "rain": "rain-soaked environment, wet architecture, rain drops, moisture, reflections",
-        "more golden": "golden-hour light, warm gold tones, amber accents, sunset glow, rich warm palette",
-        "golden": "golden tones, golden-hour lighting, amber warmth, sun-lit aesthetic",
-        "more blue": "stronger Duke Blue tones, more blue color grading, deeper blue palette, blue-hour lighting, cool blue dominant",
-        "blue": "blue tones, Duke Royal Blue prominent, cool blue lighting, blue-hour aesthetic",
-        "less dramatic": "less contrast, softer shadows, more balanced lighting, less intense, more approachable",
-        "less contrast": "reduced contrast, softer transitions, more subtle light, less dramatic shadows",
-        "more dramatic": "higher contrast, dramatic shadows, intense lighting, bold composition, strong impact",
-        "dramatic": "dramatic shadows, high contrast, intense lighting, bold visual impact",
-        "more detail": "visible architectural detail, more texture, fine details visible, crisp focus",
-        "detail": "detailed texture, visible architecture, sharp focus on elements, textural emphasis",
-        "softer": "soft focus, gentle lighting, smooth gradients, delicate aesthetic, subtle tones",
-        "soft": "soft lighting, gentle shadows, smooth transitions, delicate details",
-        "sharper": "sharp focus, crisp details, high definition, clear textures, defined edges",
-        "sharp": "sharp focus, crisp details, high definition, clear composition",
-        "more editorial": "editorial photography style, professional magazine aesthetic, polished refined look, high production value",
-        "editorial": "editorial style, magazine-quality, professional photography, polished aesthetic",
-        "more indie": "indie aesthetic, artistic vision, unique perspective, creative composition, non-commercial feel",
-        "indie": "indie aesthetic, artistic approach, creative vision, unique style, alternative aesthetic",
-        "more peaceful": "calm aesthetic, peaceful mood, serene lighting, tranquil atmosphere, gentle tones",
-        "peaceful": "peaceful mood, calm lighting, serene aesthetic, tranquil environment",
-        "energetic": "energetic mood, vibrant tones, dynamic composition, lively atmosphere, bold colors",
-        # NEW: Compositional instructions
-        "add sun": "bright sun visible, sunlight prominent, solar element, sun glare, bright sunlit scene",
-        "sun right": "sun positioned on right side, right-side lighting, sun from right, bright right-side illumination",
-        "sun left": "sun positioned on left side, left-side lighting, sun from left, bright left-side illumination",
-        "add moon": "moon visible, moonlit scene, lunar element, moonlight, night sky with moon",
-        "moon": "moonlit aesthetic, moon prominent, lunar lighting, night with moon",
-        "sky": "prominent sky, visible sky, sky as main element, sky-focused composition",
-        "clouds": "cloudy atmosphere, cloud formations, overcast sky, dramatic clouds",
-        "sunset": "sunset lighting, golden sunset, sunset hour, warm sunset tones",
-        "sunrise": "sunrise lighting, golden sunrise, dawn light, morning light",
-        "night": "nighttime scene, night lighting, dark night sky, nocturnal atmosphere",
-        "dusk": "dusk lighting, twilight hour, dusk atmosphere, early evening light",
-        "fog": "foggy atmosphere, mist, fog effect, atmospheric fog, hazy conditions",
-        "snow": "snow visible, snowy scene, snow-covered, winter aesthetic",
-        "autumn": "autumn colors, fall aesthetic, warm autumn tones, fall foliage",
-        "summer": "summer light, bright summer day, summer aesthetic, warm daytime",
-        "winter": "winter aesthetic, cold tones, winter lighting, frosty atmosphere",
+        # Black & White / Grayscale
+        "black and white": "MONOCHROMATIC, GRAYSCALE, BLACK AND WHITE, no color, desaturated, gray, greyscale, noir, black and white photography, high contrast monochrome, completely desaturated",
+        "grayscale": "MONOCHROMATIC, GRAYSCALE, BLACK AND WHITE, no color, desaturated, gray, greyscale, noir, black and white photography, high contrast monochrome",
+        "bw": "MONOCHROMATIC, GRAYSCALE, BLACK AND WHITE, no color, desaturated",
+        "monochrome": "MONOCHROMATIC, GRAYSCALE, BLACK AND WHITE, no color, desaturated, gray scale",
+
+        # Darkness & Gloom - Aggressive dark color palette
+        "darker": "VERY DARK, DARK, DARK, BLACK dominant color, DARK GREY dominant, LOW-KEY lighting, HEAVY SHADOWS, deep shadows, NIGHTTIME, underexposed, moody, gloomy, shadowy, dim, darkness, BLACK and grey tones, no bright colors",
+        "make it darker": "EXTREMELY DARK, BLACK dominant, DARK GREY dominant, VERY DARK, DARK, DARK, BLACK and grey color palette, LOW-KEY lighting, HEAVY SHADOWS, NIGHTTIME aesthetic, underexposed, minimal light, dark mood, no brightness",
+        "dark": "VERY DARK, DARK, LOW-KEY lighting, HEAVY SHADOWS, NIGHTTIME aesthetic, BLACK tones, dark grey dominant",
+        "more dark": "VERY DARK, DARK, BLACK dominant, DARK GREY, LOW-KEY lighting, HEAVY SHADOWS, NIGHTTIME, underexposed, dark color palette",
+        "gloomier": "GLOOMY, MOODY, VERY DARK, DARK, shadowy, LOW-KEY, overcast, cloudy, depressing, sad lighting, dark clouds, dark mood, BLACK and DARK GREY tones, minimal light",
+        "gloomy": "GLOOMY, MOODY, DARK, shadowy, LOW-KEY, overcast, cloudy, depressing lighting, dark tones",
+        "dim": "DIM lighting, low brightness, DARK, DARK GREY, BLACK shadows, underlit, LOW-KEY, dark atmosphere",
+        "less bright": "LESS BRIGHT, VERY DARK, darker, dim, LOW-KEY, reduced brightness, HEAVY SHADOWS, dark tones",
+
+        # Weather - NOTE: Rain removed (Stable Diffusion 1.5 unreliable with precipitation details)
+        "add fog": "FOG, FOGGY, mist, misty, fog effect, atmospheric, hazy, fog-covered, foggy atmosphere",
+        "fog": "FOG, FOGGY, mist, misty, fog effect, hazy, fog-covered",
+        "misty": "MISTY, MIST, fog, foggy, hazy, atmospheric",
+        "add clouds": "CLOUDY, CLOUDS, cloud formations, overcast, cloudy sky, dramatic clouds, cloud cover",
+        "clouds": "CLOUDY, CLOUDS, cloud formations, overcast, dramatic clouds",
+        "overcast": "OVERCAST, CLOUDY, CLOUDS, gray sky, gray clouds, no sun, cloud cover",
+        "stormy": "STORMY, STORM, dark storm clouds, dramatic storm, lightning sky, threatening weather",
+        "snow": "SNOW, SNOWY, snow-covered, snowfall, winter snow, snowy landscape, white snow",
+
+        # Lighting & Brightness
+        "brighter": "BRIGHT, BRIGHT, BRIGHT, HIGH-KEY lighting, illuminated, well-lit, bright light, sunny, luminous, daylight",
+        "brighten": "BRIGHT, BRIGHT, HIGH-KEY lighting, illuminated, bright, well-lit, sunny",
+        "bright": "BRIGHT, BRIGHT, BRIGHT, HIGH-KEY lighting, luminous, well-lit, sunny, daylight",
+        "lighter": "LIGHTER, BRIGHT, lighter tones, illuminated, high-key lighting, brighter",
+        "add light": "BRIGHT LIGHT, illumination, bright lighting, well-lit, luminous, sunlit",
+        "sunny": "SUNNY, SUNSHINE, bright sun, daylight, golden hour, sunlit, bright",
+
+        # Colors & Saturation
+        "more colorful": "SATURATED, VIBRANT, COLORFUL, BOLD colors, vivid, chromatic, rich colors, saturated palette, bright colors",
+        "colorful": "SATURATED, VIBRANT, COLORFUL, BOLD colors, vivid, chromatic, rich colors",
+        "vibrant": "VIBRANT, SATURATED, bold colors, vivid, chromatic intensity, bright colors",
+        "less colorful": "DESATURATED, muted, pale, low saturation, washed out, monochromatic feel",
+        "muted": "MUTED colors, desaturated, pale, subdued, soft tones, low saturation",
+        "saturated": "SATURATED, VIBRANT colors, bold colors, vivid, intense colors",
+        "desaturated": "DESATURATED, muted, pale, subdued, low saturation, washed out",
+
+        # Specific Colors
+        "add blue": "BLUE, BLUE tones, BLUE, Duke Blue, blue dominant, blue color grading, blue atmosphere",
+        "more blue": "MORE BLUE, BLUE tones, stronger blue, blue color grading, blue-hour lighting",
+        "blue": "BLUE, BLUE tones, blue dominant, cool blue, blue lighting",
+        "add gold": "GOLD, GOLDEN, GOLD tones, golden light, amber, warm gold, golden hues",
+        "more golden": "GOLDEN, GOLDEN-HOUR, GOLDEN light, warm gold, amber, sunset glow, golden tones",
+        "golden": "GOLDEN, GOLDEN-HOUR light, golden tones, warm gold, amber, sun-lit",
+        "add purple": "PURPLE, PURPLE tones, violet, purple lighting, purple atmosphere, regal purple",
+        "purple": "PURPLE, PURPLE tones, violet, purple atmosphere",
+        "add red": "RED, RED tones, crimson, scarlet, red lighting, warm red",
+        "red": "RED, RED tones, crimson, red atmosphere",
+
+        # Time of Day
+        "sunset": "SUNSET, SUNSET LIGHTING, golden sunset, warm sunset, orange and gold, dusk light, sunset hour, golden hour",
+        "sunrise": "SUNRISE, SUNRISE LIGHTING, golden sunrise, dawn light, morning sun, golden hour, warm morning",
+        "night": "NIGHT, NIGHTTIME, dark night, night sky, nocturnal, stars, moonlight, dark evening",
+        "dusk": "DUSK, TWILIGHT, early evening, dusk lighting, twilight hour, golden hour transition",
+        "dawn": "DAWN, EARLY MORNING, sunrise time, first light, morning light, golden dawn",
+        "daytime": "DAYTIME, DAY, bright daylight, sunny day, full daylight, midday",
+        "midday": "MIDDAY, NOON, bright sun overhead, harsh daylight, bright, sunny",
+
+        # Mood & Atmosphere
+        "gloomy": "GLOOMY, MOODY, DARK mood, sad, melancholic, depressing, dark atmosphere",
+        "moody": "MOODY, DARK mood, atmospheric, brooding, intense mood, dark feeling",
+        "peaceful": "PEACEFUL, CALM, serene, tranquil, quiet, relaxing, peaceful atmosphere",
+        "calm": "CALM, PEACEFUL, serene, relaxed, tranquil, gentle mood",
+        "dramatic": "DRAMATIC, INTENSE, bold, high contrast, powerful, striking, dramatic lighting",
+        "intense": "INTENSE, DRAMATIC, bold, powerful, striking, energetic, high impact",
+        "energetic": "ENERGETIC, VIBRANT, DYNAMIC, lively, active, bold, powerful, energetic mood",
+        "bold": "BOLD, STRONG, striking, powerful, intense, confident, dramatic",
+        "dreamy": "DREAMY, ethereal, soft focus, hazy, floating, fantastical, dreamy atmosphere, magical, surreal",
+        "more dreamy": "DREAMY, ethereal, soft, hazy, floating, dreamy atmosphere, magical, surreal lighting",
+        "dreamy mood": "DREAMY, ethereal, soft, hazy, dreamy atmosphere, magical aesthetic",
+
+        # Architecture & Style
+        "gothic": "GOTHIC, gothic architecture, gothic style, dark gothic, gothic mood, historical gothic",
+        "more gothic": "GOTHIC, gothic architecture, gothic elements, dark gothic mood, gothic aesthetic",
+        "cinematic": "CINEMATIC, cinematic lighting, cinematic mood, dramatic cinematic, cinema",
+        "more cinematic": "CINEMATIC, cinematic lighting, dramatic cinematic style, cinema quality, cinematic mood",
+
+        # Weather & Nature
+        "add sun": "SUN, SUNLIGHT, bright sun visible, sun glare, solar, sunlit scene, sun element",
+        "sunny": "SUNNY, SUNSHINE, bright sun, sunlit, golden light, daylight",
+        "add moon": "MOON, MOONLIGHT, lunar, moonlit scene, night moon, moon visible, crescent moon",
+        "moonlit": "MOONLIT, MOON, moonlight, lunar lighting, night moon, crescent",
+        "add wind": "WINDY, WIND, windswept, wind effects, breezy, wind-blown",
+        "windy": "WINDY, WIND, windswept, breezy, wind effects",
+        "add snow": "SNOW, SNOWY, snowfall, winter snow, snow-covered, snowy landscape",
+
+        # Detail & Clarity
+        "sharper": "SHARP, CRISP, HIGH DEFINITION, clear, detailed, sharp focus, defined details, clear textures",
+        "sharp": "SHARP, CRISP, clear, detailed, sharp focus, defined, high definition",
+        "softer": "SOFT, SOFT FOCUS, blurry, gentle, smooth, delicate, soft aesthetic",
+        "soft": "SOFT, SOFT FOCUS, smooth, gentle, delicate, soft aesthetic",
+        "more detail": "DETAILED, TEXTURE, fine details, visible texture, intricate, detailed architecture",
+        "detailed": "DETAILED, TEXTURE, fine details, visible texture, crisp, intricate",
+        "less detail": "SOFT FOCUS, BLURRY, less detail, soft, out of focus, minimalist",
+        "minimal": "MINIMAL, MINIMALIST, simple, clean, uncluttered, sparse, minimal elements",
+        "simplify": "SIMPLE, MINIMAL, clean, uncluttered, reduced elements, minimal design",
+
+        # Contrast & Composition
+        "more contrast": "HIGH CONTRAST, CONTRAST, strong contrast, bold shadows, bright highlights, dramatic",
+        "high contrast": "HIGH CONTRAST, CONTRAST, strong contrast, bold shadows, bright lights, dramatic",
+        "less contrast": "LOW CONTRAST, soft, subtle, gentle transitions, muted, soft shadows",
+        "low contrast": "LOW CONTRAST, soft transitions, subtle, gentle lighting, muted tones",
+        "add texture": "TEXTURE, TEXTURED, textural, rough, detailed texture, visible texture, grain",
+        "texture": "TEXTURE, TEXTURED, textural, detailed texture, rough, visible grain",
+        "film grain": "FILM GRAIN, GRAIN, grainy, analog film, vintage film look, film aesthetic",
+        "grainy": "GRAINY, GRAIN, film grain, vintage, analog aesthetic",
     }
 
-    # Try exact matches first, then partial matches
+    # Try exact matches first
     for key, enhancement in mappings.items():
-        if refinement_lower == key or refinement_lower.startswith(key):
+        if refinement_lower == key:
             return enhancement
 
-    # If no mapping found, just use the refinement as-is
-    return refinement_text
+    # Then try partial matches (for "make it darker" → "darker")
+    for key, enhancement in mappings.items():
+        if key in refinement_lower:
+            return enhancement
+
+    # If no mapping found, return strong version of the refinement text itself
+    return f"{refinement_text.upper()}, {refinement_text}, {refinement_text.lower()}"
 
 
 def refine_prompt(base_prompt: str, refinement_instruction: str) -> tuple[str, bool]:

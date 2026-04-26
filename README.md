@@ -374,8 +374,24 @@ See `CNN_IMPROVEMENT_GUIDE.md` for:
 - Ensemble approach combining multiple classifiers
 
 ### LoRA Fine-Tuning
-See `LORA_QUICKSTART.md` for:
-- Training on larger Duke image dataset (100+ images)
+
+**Improved Training Script Available:** Use `scripts/lora_train_improved.py` for better results:
+```bash
+python scripts/lora_train_improved.py --epochs 25 --rank 32 --lr 1e-5
+```
+
+**Improvements over baseline:**
+- Higher LoRA rank (32 vs 16) for more model capacity → more detailed Duke aesthetics
+- Lower learning rate (1e-5 vs 5e-5) for stable convergence
+- More epochs (20-30) to fully learn the style
+- Data augmentation (crops, rotations, color jitter) for better generalization
+- Learning rate scheduling (cosine annealing) for smooth training
+- Diverse training prompts describing Duke architecture
+
+See documentation:
+- **`LORA_IMPROVED_GUIDE.md`** ← START HERE for improved training (rank 32, LR 1e-5, 20-30 epochs)
+- **`LORA_QUICKSTART.md`** for basic training and fundamentals
+- Scaling to larger Duke image dataset (100+ images)
 - Creating genre-specific LoRA weights (rock_lora, jazz_lora, etc.)
 - Merging LoRA weights into base model for deployment
 
@@ -398,8 +414,18 @@ All code, architecture design, prompt engineering, LoRA training, and documentat
 **Current Limitations:**
 - CNN accuracy ~70% on GTZAN (standard baseline)
 - LoRA trained on only 41 images (could improve with 100+)
+- Stable Diffusion v1.5 struggles with specific object addition (e.g., "add rain" unreliable) — focus on style/mood refinements instead
 - No user authentication or cover history (stateless API)
 - Generation takes 30-60 seconds (single GPU inference)
+
+**Refinement System Notes:**
+Most effective refinements work with Stable Diffusion 1.5:
+- ✅ **Style/Mood:** darker, brighter, more colorful, peaceful, dramatic, energetic
+- ✅ **Lighting:** sunset, sunrise, night, dusk, golden hour
+- ✅ **Contrast/Detail:** sharper, softer, more/less contrast, high contrast
+- ✅ **Colors:** add blue, add gold, monochrome, black and white
+- ✅ **Atmosphere:** foggy, misty, overcast, stormy
+- ❌ **Object Addition:** rain, specific objects often don't render reliably (model limitation)
 
 **Future Enhancements:**
 - Real-time streaming generation with progressive refinement
