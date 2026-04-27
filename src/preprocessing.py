@@ -4,7 +4,7 @@ Converts raw audio waveforms into normalized log-mel-spectrograms suitable for
 CNN input. Also extracts auxiliary features (MFCCs, spectral statistics) used
 by the baseline model and for mood-feature extraction.
 
-# AI-generated via Claude (scaffold). Parameters and design reviewed by author.
+
 """
 from __future__ import annotations
 
