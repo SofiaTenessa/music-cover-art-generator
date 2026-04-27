@@ -9,7 +9,6 @@ Design choices to discuss in the technical walkthrough:
     - Dropout in the classifier head (regularization rubric item).
     - Global average pooling to reduce dependence on input length.
 
-# AI-generated via Claude (scaffold). Author tuned depth, channel counts, dropout.
 """
 from __future__ import annotations
 
