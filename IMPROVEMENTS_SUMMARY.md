@@ -142,71 +142,7 @@ Even with aggressive repetition and caps, Stable Diffusion v1.5:
 3. Post-process with separate rain rendering system (complex)
 4. Accept the limitation and use working refinements instead ← **Current approach**
 
----
 
-## Files Modified
 
-1. **`src/prompt_builder.py`**
-   - Removed rain mappings (lines ~219-221)
-   - Removed "rain" from valid keywords
-   - Added explanatory comment
-
-2. **`README.md`**
-   - Added improved training section
-   - Added refinement capabilities matrix
-   - Updated limitations section
-
-3. **`scripts/lora_train_improved.py`** (NEW)
-   - 280-line improved training script
-   - Rank 32, LR 1e-5, 20 epochs defaults
-   - Augmentation, scheduling, gradient clipping
-
-4. **`LORA_IMPROVED_GUIDE.md`** (NEW)
-   - Comprehensive training improvement guide
-   - Hyperparameter recommendations
-   - Expected results and troubleshooting
-
----
-
-## Next Steps (Recommended)
-
-1. **Run improved LoRA training:**
-   ```bash
-   python scripts/lora_train_improved.py --epochs 25
-   ```
-   Estimated time: 70-100 minutes on Mac MPS
-
-2. **Update Flask server** to use new weights:
-   ```bash
-   python app/flask_server_lora.py --lora-path lora_weights/chapel_covers_lora_improved
-   ```
-
-3. **Test style refinements** (not rain):
-   - Try: "darker", "sunset", "more colorful", "monochrome", "dramatic"
-   - Verify Duke chapel is more prominent and less repetitive
-   - Check that mood/style changes are noticeable
-
-4. **Document results** in project writeup:
-   - Show before/after comparisons
-   - Explain why rain was removed
-   - Note which refinements work best
-
-5. **Record demo videos:**
-   - Quick demo (1-2 min): upload song → see genre + mood → generate cover → refine with working prompts
-   - Technical walkthrough (5-7 min): explain LoRA improvements, CNN refinement, effective refinements
-
----
-
-## Conclusion
-
-The original system had good architecture but needed:
-1. **Better LoRA training** → Implemented improved training script
-2. **Realistic refinement expectations** → Removed rain, documented what works
-3. **Clear documentation** → Created LORA_IMPROVED_GUIDE.md
-
-The system can now reliably:
-- ✅ Learn Duke aesthetics better (improved LoRA)
-- ✅ Apply working style/mood refinements
-- ✅ Avoid wasting time on SD 1.5 limitations (rain)
 
 **Estimated quality improvement:** 30-50% better Duke aesthetic consistency from improved LoRA training.
