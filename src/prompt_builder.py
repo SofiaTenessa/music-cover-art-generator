@@ -257,13 +257,13 @@ def map_refinement_to_prompt(refinement_text: str) -> str:
         "red": "RED, RED tones, crimson, red atmosphere",
 
         # Time of Day
-        "sunset": "SUNSET, SUNSET LIGHTING, golden sunset, warm sunset, orange and gold, dusk light, sunset hour, golden hour",
-        "sunrise": "SUNRISE, SUNRISE LIGHTING, golden sunrise, dawn light, morning sun, golden hour, warm morning",
-        "night": "NIGHT, NIGHTTIME, dark night, night sky, nocturnal, stars, moonlight, dark evening",
-        "dusk": "DUSK, TWILIGHT, early evening, dusk lighting, twilight hour, golden hour transition",
-        "dawn": "DAWN, EARLY MORNING, sunrise time, first light, morning light, golden dawn",
-        "daytime": "DAYTIME, DAY, bright daylight, sunny day, full daylight, midday",
-        "midday": "MIDDAY, NOON, bright sun overhead, harsh daylight, bright, sunny",
+        "sunset": "SUNSET, SUNSET LIGHTING, GOLDEN, golden sunset, warm sunset, orange and gold, WARM TONES, bright golden hour, vibrant dusk light, sunset hour, SATURATED GOLDEN",
+        "sunrise": "SUNRISE, SUNRISE LIGHTING, GOLDEN, golden sunrise, dawn light, morning sun, golden hour, warm morning, BRIGHT GOLDEN LIGHT",
+        "night": "NIGHT, NIGHTTIME, night sky, nocturnal, stars, moonlight, dark evening, cool night tones",
+        "dusk": "DUSK, TWILIGHT, WARM, early evening, dusk lighting, twilight hour, golden hour transition, GOLDEN LIGHT",
+        "dawn": "DAWN, EARLY MORNING, sunrise time, first light, GOLDEN morning light, golden dawn, WARM DAWN",
+        "daytime": "DAYTIME, DAY, bright daylight, sunny day, full daylight, midday, COLORFUL BRIGHT",
+        "midday": "MIDDAY, NOON, bright sun overhead, bright daylight, bright, sunny, VIBRANT",
 
         # Mood & Atmosphere
         "gloomy": "GLOOMY, MOODY, DARK mood, sad, melancholic, depressing, dark atmosphere",
@@ -346,16 +346,18 @@ def refine_prompt(base_prompt: str, refinement_instruction: str) -> tuple[str, b
     if not refinement_instruction:
         return base_prompt, True
 
-    # Validate refinement
     is_valid, error_msg = is_valid_refinement(refinement_instruction)
     if not is_valid:
-        return base_prompt, False  # Return original prompt and invalid flag
+        return base_prompt, False
 
-    # Map refinement to stronger language
     mapped_refinement = map_refinement_to_prompt(refinement_instruction)
 
-    # Append to base prompt
-    refined = f"{base_prompt}, {mapped_refinement.strip()}"
+    refinement_lower = refinement_instruction.lower()
+    color_light_words = ["sunset", "sunrise", "golden", "bright", "colorful", "vibrant", "warm", "sunny"]
+    if any(word in refinement_lower for word in color_light_words):
+        refined = f"{mapped_refinement.strip()}, {base_prompt}"
+    else:
+        refined = f"{base_prompt}, {mapped_refinement.strip()}"
 
     return refined, True
 
