@@ -5,7 +5,7 @@ that masks random time and frequency bands during training.
 
 Reference: Park et al., SpecAugment (Interspeech 2019).
 
-# AI-generated via Claude (scaffold). SpecAugment + split logic reviewed by author.
+
 """
 from __future__ import annotations
 
