@@ -11,7 +11,7 @@ Features (each ticks at least one rubric item):
 Run:
     python -m src.train --data-dir data/genres_original --epochs 50
 
-# AI-generated via Claude (scaffold). Author tuned hyperparameters.
+
 """
 from __future__ import annotations
 
