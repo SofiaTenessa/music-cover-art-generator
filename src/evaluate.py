@@ -9,7 +9,7 @@ Produces:
 Run:
     python -m src.evaluate --ckpt models/cnn_default_best.pt --data-dir data/genres_original
 
-# AI-generated via Claude (scaffold). Author owns error-analysis narrative.
+
 """
 from __future__ import annotations
 
