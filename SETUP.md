@@ -82,13 +82,43 @@ First run will download Stable Diffusion weights (~4 GB) — this takes a few mi
 
 ## Step 7: Launch the web app
 
+The project includes a Flask-based web application with LoRA fine-tuned Stable Diffusion for Duke-inspired album cover generation.
+
 ```bash
-streamlit run app/streamlit_app.py
+python app/flask_server_lora.py
 ```
 
-Open your browser to http://localhost:8501.
+Open your browser to **http://127.0.0.1:5000/**
+
+**What you'll see:**
+- Upload an audio file (MP3, WAV, FLAC, M4A)
+- The system predicts the music genre using the trained CNN
+- Generates a Duke-inspired album cover using Stable Diffusion
+- Refine the cover with adjustments like "darker", "sunset", "more vibrant", etc.
+
+First run will download Stable Diffusion v1.5 weights (~4 GB) — this takes a few minutes but only happens once.
+
+## Optional: Train LoRA Fine-tuning
+
+For enhanced Duke-specific image generation, the project includes LoRA fine-tuning on 41 Duke campus images:
+
+```bash
+python scripts/lora_train_improved.py
+```
+
+This creates `lora_weights/chapel_covers_lora/` which is automatically loaded by the Flask server.
 
 ## Troubleshooting
+
+**Flask server not responding at http://127.0.0.1:5000/** — Make sure:
+- The Flask server is running (you should see "Running on http://127.0.0.1:5000/" in the terminal)
+- Check that port 5000 is not in use by another application
+- Wait 10-15 seconds on first run for Stable Diffusion weights to load
+
+**"ModuleNotFoundError: No module named 'peft'"** — Install the missing package:
+```bash
+pip install peft
+```
 
 **"MPS backend not available"** — Make sure you're on PyTorch 2.0+ and macOS 12.3+. Verify with:
 ```python
@@ -96,7 +126,7 @@ import torch
 print(torch.backends.mps.is_available())  # should print True
 ```
 
-**"Out of memory" when running Stable Diffusion** — Try `--generator sdxl-turbo` in the pipeline to use a smaller, faster model, or run generation on Colab.
+**"Out of memory" when generating images** — Stable Diffusion requires 8GB+ VRAM. If you run out of memory, reduce the number of inference steps or run on a machine with more GPU memory.
 
 **Librosa fails to load .wav files** — Install FFmpeg:
 - macOS: `brew install ffmpeg`

@@ -25,20 +25,18 @@ from dataclasses import dataclass
 # NO official Duke logos or copyrighted marks—only architectural and color inspiration.
 
 DUKE_AESTHETIC_BASE = (
-    "Duke university campus aesthetic, stone architecture with arches, chapel visible in background, "
-    "campus quad atmosphere, indie album cover, modern photography style, professional composition, "
-    "artistic lighting, film grain texture, square album cover format, "
-    "Duke Navy Blue (#012169) and Duke Royal Blue (#00539B) tones, white accents"
+    "Duke campus, stone architecture, chapel in background, indie album cover, "
+    "Duke Blue and gold tones, professional composition, artistic lighting"
 )
 
 GENRE_STYLES: dict[str, dict] = {
     "blues": {
-        "style": "melancholic album cover set on Duke campus at dusk, featuring Duke Chapel in soft blue twilight, wet stone reflecting ambient light, subtle golden window glow, mist in the air, deep navy and amber color palette, cinematic lighting, shallow depth of field, emotional and introspective mood, slight film grain, soft shadows",
-        "subjects": ["Duke Chapel at dusk", "wet stone courtyard at twilight", "chapel window with golden glow"],
+        "style": "melancholic album cover on Duke campus at dusk, Duke Chapel in soft blue twilight, wet stone, golden window glow, deep navy and amber palette, emotional mood",
+        "subjects": ["Duke Chapel at dusk", "wet stone courtyard at twilight", "chapel window glow"],
     },
     "classical": {
-        "style": "elegant classical album cover with perfectly symmetrical composition inside Duke Chapel, towering gothic arches and columns, soft diffused daylight, marble and stone textures, muted blue and ivory tones, balanced framing, minimalistic and refined, high detail, no clutter, timeless and sophisticated aesthetic",
-        "subjects": ["Duke Chapel interior with symmetrical arches", "gothic columns and vaulted ceiling", "chapel architecture in soft daylight"],
+        "style": "elegant classical album cover inside Duke Chapel, symmetrical composition, gothic arches and columns, soft daylight, marble stone, blue and ivory tones, refined and sophisticated",
+        "subjects": ["Duke Chapel interior", "gothic columns and ceiling", "chapel architecture"],
     },
     "country": {
         "style": "warm country album cover set in Duke Gardens at golden hour, soft sunlight filtering through trees, fallen leaves, wooden bench or pathway, earthy tones (brown, gold, muted green), relaxed and nostalgic atmosphere, slight haze, natural textures, gentle depth, Americana southern charm",
@@ -53,28 +51,28 @@ GENRE_STYLES: dict[str, dict] = {
         "subjects": ["Duke campus from low-angle perspective", "architectural detail with dramatic shadows", "urban campus composition with strong contrast"],
     },
     "jazz": {
-        "style": "smooth jazz album cover with Duke campus at night, soft spotlighting, calm atmosphere, deep blue tones with subtle gold accents, reflections on stone or pavement, minimal composition, elegant negative space, slightly blurred edges, relaxed and sophisticated mood",
-        "subjects": ["Duke campus at night with soft lighting", "architectural reflection in stone", "minimalist composition with negative space"],
+        "style": "smooth jazz album cover on Duke campus at night, soft spotlighting, deep blue and gold tones, minimal composition, relaxed and sophisticated",
+        "subjects": ["Duke campus at night", "architectural reflection", "minimalist composition"],
     },
     "metal": {
         "style": "intense metal album cover featuring Duke Chapel under a stormy sky, dramatic clouds, lightning or harsh contrast lighting, dark shadows, heavy textures, desaturated tones with sharp highlights, aggressive composition, cinematic darkness, high contrast, powerful and ominous mood",
         "subjects": ["Duke Chapel under stormy sky", "dark dramatic architecture with harsh lighting", "chapel silhouette against dramatic clouds"],
     },
     "pop": {
-        "style": "bright pop album cover on Duke campus during a sunny day, vibrant blue sky, saturated Duke blue and gold palette, clean modern composition, cheerful mood, soft shadows, high clarity, minimal grain, energetic and uplifting, crisp lighting, playful aesthetic",
-        "subjects": ["Duke campus on bright sunny day", "vibrant blue sky with saturated colors", "cheerful campus scene with clear lighting"],
+        "style": "bright pop album cover on Duke campus during sunny day, vibrant blue sky, saturated Duke blue and gold, clean modern, cheerful mood, energetic and uplifting",
+        "subjects": ["Duke campus on sunny day", "vibrant blue sky with colors", "cheerful campus scene"],
     },
     "reggae": {
         "style": "relaxed reggae album cover in Duke Gardens at sunset, lush greenery, warm golden light, soft shadows, hints of green and amber tones, peaceful composition, breezy and uplifting mood, natural textures, slight haze, calm and rhythmic atmosphere",
         "subjects": ["Duke Gardens at sunset with lush greenery", "warm golden light through natural elements", "peaceful campus landscape at dusk"],
     },
     "rock": {
-        "style": "energetic rock album cover on Duke campus, gritty texture, high contrast black and white with blue accents, film grain, motion blur, dynamic framing, edgy composition, strong shadows, raw and powerful mood, slightly chaotic energy",
-        "subjects": ["Duke campus with dynamic framing", "high contrast architectural detail", "energetic campus composition with motion"],
+        "style": "energetic rock album cover on Duke campus, high contrast, gritty texture, edgy composition, strong shadows, raw and powerful mood",
+        "subjects": ["Duke campus with dynamic framing", "high contrast architectural detail", "energetic campus composition"],
     },
 }
 
-QUALITY_TAGS = "album cover, square format, centered composition, highly detailed, cinematic lighting, 4k, professional photography, trending on artstation, artistic aesthetic, no text"
+QUALITY_TAGS = "album cover, square format, highly detailed, cinematic, 4k, professional, no text"
 
 NEGATIVE_PROMPT = (
     "text, letters, watermark, logo, blurry, distorted, bad anatomy, extra limbs, "
@@ -351,13 +349,7 @@ def refine_prompt(base_prompt: str, refinement_instruction: str) -> tuple[str, b
         return base_prompt, False
 
     mapped_refinement = map_refinement_to_prompt(refinement_instruction)
-
-    refinement_lower = refinement_instruction.lower()
-    color_light_words = ["sunset", "sunrise", "golden", "bright", "colorful", "vibrant", "warm", "sunny"]
-    if any(word in refinement_lower for word in color_light_words):
-        refined = f"{mapped_refinement.strip()}, {base_prompt}"
-    else:
-        refined = f"{base_prompt}, {mapped_refinement.strip()}"
+    refined = f"{mapped_refinement.strip()}, {base_prompt}"
 
     return refined, True
 
