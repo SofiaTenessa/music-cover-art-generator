@@ -6,7 +6,7 @@ model architectures quantitatively" rubric items.
     1. Random predictor: Always predicts a uniformly-random class (~10% accuracy).
     2. Logistic regression on MFCC features: Classical audio-ML pipeline.
 
-# AI-generated via Claude (scaffold). Author reviewed feature choice.
+
 """
 from __future__ import annotations
 

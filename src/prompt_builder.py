@@ -11,7 +11,7 @@ Design principles:
     - The prompt is structured as (subject) + (Duke-inspired style) + (mood) + (quality tags).
     - A negative prompt pushes Stable Diffusion away from common failure modes.
 
-# AI-generated via Claude (scaffold). Author owns the prompt design / tuning.
+
 """
 from __future__ import annotations
 
