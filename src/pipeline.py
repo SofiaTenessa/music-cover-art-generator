@@ -10,7 +10,7 @@ Stages:
 CLI:
     python -m src.pipeline --audio path/to/song.wav --output cover.png
 
-# AI-generated via Claude (scaffold). Author owns stage integration.
+
 """
 from __future__ import annotations
 
