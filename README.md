@@ -148,8 +148,8 @@ music-cover-art-generator/
 
 ## Video Links
 
-* **[Demo Video](#)** — End-to-end walkthrough: upload song → see predictions → generate cover → refine with feedback
-* **[Technical Walkthrough](#)** — Deep dive into architecture, LoRA fine-tuning, CNN genre classification, prompt engineering
+* **[Demo Video] ** — End-to-end walkthrough: upload song → see predictions → generate cover → refine with feedback
+* **[Technical Walkthrough](https://youtu.be/U2IpsxJHnHU)** — Deep dive into architecture, LoRA fine-tuning, CNN genre classification, prompt engineering
 
 ## Evaluation
 
