@@ -2,7 +2,7 @@
 
 A machine learning pipeline that generates Duke-inspired indie album covers from music uploads. The system analyzes audio to predict genre and mood, then synthesizes custom cover art using Stable Diffusion fine-tuned with LoRA weights learned from Duke campus imagery.
 
-**Live Demo:** http://localhost:5000 (Flask server)
+**Live Demo:** [http://localhost:5000 ](http://127.0.0.1:5000)(Flask server)
 
 ## Features
 
